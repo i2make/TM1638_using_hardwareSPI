@@ -149,8 +149,8 @@ byte TM16XX::receive()
 {
     SPI.beginTransaction(*spiSetting);
     byte temp = SPI.transfer(0xFF);
-    return temp;
     SPI.endTransaction();
+    return temp;
 } // receive
 
 #if !defined(ARDUINO) || ARDUINO < 100
