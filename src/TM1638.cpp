@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "TM1638.h"
 #include "string.h"
 
-TM1638::TM1638(byte strobePin, boolean activateDisplay, byte intensity)
-	: TM16XX(strobePin, 8, activateDisplay, intensity)
+TM1638::TM1638(byte strobePin, SPISettings* _spiSetting, boolean activateDisplay, byte intensity)
+	: TM16XX(strobePin, _spiSetting, 8, activateDisplay, intensity)
 {
 	// nothing else to do - calling super is enough
 }

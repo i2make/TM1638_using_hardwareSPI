@@ -35,7 +35,7 @@ class TM16XX
      * Instantiate a tm16xx module specifying the number of displays, display state,
      * the starting intensity (0-7) data, clock and stobe pins.
      */
-    TM16XX(byte strobePin, byte displays, boolean activateDisplay = true,
+    TM16XX(byte strobePin, SPISettings* _spiSetting, byte displays, boolean activateDisplay = true,
     	byte intensity = 7);
 
     /** Set the display (segments and LEDs) active or off and intensity (range from 0-7). */

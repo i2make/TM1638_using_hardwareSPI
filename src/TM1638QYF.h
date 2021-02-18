@@ -49,7 +49,7 @@ class TM1638QYF : public TM16XX
 {
   public:
     /** Instantiate a tm1638 module specifying the display state, the starting intensity (0-7) data, clock and stobe pins. */
-    TM1638QYF(byte strobePin, boolean activateDisplay = true, byte intensity = 7);
+    TM1638QYF(byte strobePin, SPISettings* _spiSetting, boolean activateDisplay = true, byte intensity = 7);
 
     /** Set the display to a unsigned hexadecimal number (with or without leading zeros) */
     void setDisplayToHexNumber(unsigned long number, byte dots, boolean leadingZeros = true,

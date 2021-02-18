@@ -36,7 +36,7 @@ class TM1638 : public TM16XX
 {
   public:
     /** Instantiate a tm1638 module specifying the display state, the starting intensity (0-7) data, clock and stobe pins. */
-    TM1638(byte strobePin, boolean activateDisplay = true, byte intensity = 7);
+    TM1638(byte strobePin, SPISettings* _spiSetting, boolean activateDisplay = true, byte intensity = 7);
 
     /** Set the display to a unsigned hexadecimal number (with or without leading zeros) */
     void setDisplayToHexNumber(unsigned long number, byte dots, boolean leadingZeros = true,

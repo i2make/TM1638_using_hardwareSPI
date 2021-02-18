@@ -24,14 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "TM16XX.h"
 
-TM16XX::TM16XX(byte strobePin, byte displays, boolean activateDisplay,
+TM16XX::TM16XX(byte strobePin, SPISettings* _spiSetting, byte displays, boolean activateDisplay,
 	byte intensity)
 {
     // SPI
+    spiSetting = _spiSetting;
     SPI.begin();
-    SPISettings mySetting(16000000, LSBFIRST, SPI_MODE0);
-    SPI.beginTransaction(mySetting);
-    SPI.setClockDivider(SPI_CLOCK_DIV16);
+    //SPI.beginTransaction(*spiSetting);
+    //SPI.setClockDivider(SPI_CLOCK_DIV32);
 
   this->strobePin = strobePin;
   this->displays = displays;
@@ -140,39 +140,17 @@ void TM16XX::sendData(byte address, byte data)
 
 void TM16XX::send(byte data)
 {
-//  for (int i = 0; i < 8; i++) {
-//    digitalWrite(clockPin, LOW);
-//    digitalWrite(dataPin, data & 1 ? HIGH : LOW);
-//    data >>= 1;
-//    digitalWrite(clockPin, HIGH);
-//  }
+    SPI.beginTransaction(*spiSetting);
     SPI.transfer(data);
+    SPI.endTransaction();
 } // send
 
 byte TM16XX::receive()
 {
-  byte temp = 0;
-
-  // Pull-up on
-//  pinMode(dataPin, INPUT);
-//  digitalWrite(dataPin, HIGH);
-
-//  for (int i = 0; i < 8; i++) {
-//    temp >>= 1;
-//
-//    digitalWrite(clockPin, LOW);
-//    if (digitalRead(dataPin)) {
-//      temp |= 0x80;
-//    }
-//    digitalWrite(clockPin, HIGH);
-//  }
-    temp = SPI.transfer(0xFF);
-
-  // Pull-up off
-  //pinMode(dataPin, OUTPUT);
-  //digitalWrite(dataPin, LOW);
-
-  return temp;
+    SPI.beginTransaction(*spiSetting);
+    byte temp = SPI.transfer(0xFF);
+    return temp;
+    SPI.endTransaction();
 } // receive
 
 #if !defined(ARDUINO) || ARDUINO < 100
